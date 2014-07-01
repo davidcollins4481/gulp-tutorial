@@ -10,12 +10,12 @@ var paths = {
     // using framework version of jquery
     scripts: [
         'bower_components/jquery/dist/jquery.js',
-        'js/myscript.js'
+        'js/src/myscript.js'
     ]
 };
 
 gulp.task('lint', function() {
-    return gulp.src('js/*.js')
+    return gulp.src('js/src/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
