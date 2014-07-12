@@ -1,9 +1,11 @@
 $table_background_color: red;
-$table_border_color: black;
+$table_border_color: green;
 
 .container {
     table {
         background-color: $table_background_color;
         border: 1px solid $table_border_color;
+        width: 200px;
+        height: 300px;
     }
 }

@@ -9192,7 +9192,7 @@ return jQuery;
 ;(function($) {
     $(document).ready(function() {
         $('#action').bind('click', function(e) {
-            $('.node').html('changed!');
+            $('.node').html('changed me again!');
         });
     });
 })(jQuery);

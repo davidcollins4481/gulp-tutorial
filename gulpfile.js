@@ -1,12 +1,13 @@
 var gulp = require('gulp');
 
 // Include Our Plugins
-var concat    = require('gulp-concat');
-var rename    = require('gulp-rename');
-var uglify    = require('gulp-uglify');
-var jshint    = require('gulp-jshint');
-var sass      = require('gulp-sass');
-var minifycss = require('gulp-minify-css');
+var concat     = require('gulp-concat');
+var rename     = require('gulp-rename');
+var uglify     = require('gulp-uglify');
+var jshint     = require('gulp-jshint');
+var sass       = require('gulp-sass');
+var minifycss  = require('gulp-minify-css');
+var livereload = require('gulp-livereload');
 
 var paths = {
     scripts: [
@@ -59,11 +60,21 @@ gulp.task('sass', function() {
         .pipe(gulp.dest('css/dist/'))
 });
 
-
 // Watch Files For Changes
 gulp.task('watch', function() {
+    gulp.watch(['css/src/*.scss'], ['sassminify']);
     gulp.watch(['js/src/*.js'], ['scripts']);
 });
 
+/*
+    NOTE: this will only work when used with the Chrome LiveReload plugin
+    over HTTP - not loading a page as a local file ex: file://path/index.html
+*/
+gulp.task('livereload-listen', function() {
+    livereload.listen();
+    gulp.watch(['css/dist/**', 'js/dist/**', '*.html'])
+        .on('change', livereload.changed);
+});
+
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'sassminify', 'watch']);
+gulp.task('default', ['lint', 'scripts', 'sassminify', 'watch', 'livereload-listen']);
