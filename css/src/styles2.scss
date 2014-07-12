@@ -1,0 +1,15 @@
+$block1_color: yellow;
+$block2_color: blue;
+
+div.block {
+    width: 400px;
+    height: 400px;
+
+    &.block1 {
+        background-color: $block1_color;
+    }
+
+    &.block2 {
+        background-color: $block2_color;
+    }
+}

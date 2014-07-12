@@ -1,16 +1,21 @@
 var gulp = require('gulp');
 
 // Include Our Plugins
-var concat = require('gulp-concat');
-var rename = require('gulp-rename');
-var uglify = require('gulp-uglify');
-var jshint = require('gulp-jshint');
+var concat    = require('gulp-concat');
+var rename    = require('gulp-rename');
+var uglify    = require('gulp-uglify');
+var jshint    = require('gulp-jshint');
+var sass      = require('gulp-sass');
+var minifycss = require('gulp-minify-css');
 
 var paths = {
-    // using framework version of jquery
     scripts: [
         'bower_components/jquery/dist/jquery.js',
         'js/src/myscript.js'
+    ],
+    stylesheets: [
+        'css/src/styles.scss',
+        'css/src/styles2.scss'
     ]
 };
 
@@ -30,10 +35,35 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('js/dist'));
 });
 
+/*
+    This takes every .scss file in css/src, combines them in
+    runs it through sass and pipes all of the output to a since
+    css file all.min.css then minifies it
+*/
+gulp.task('sassminify', function () {
+    gulp.src(paths.stylesheets)
+        .pipe(sass())
+        .pipe(concat('all.min.css'))
+        .pipe(gulp.dest('css/dist/'))
+        .pipe(minifycss())
+        .pipe(gulp.dest('css/dist/'));
+});
+
+/*
+    This will compile individual .scss files the individual
+    css files of the same name. css/src/style.scss -> css/dist/style.css
+*/
+gulp.task('sass', function() {
+    gulp.src(paths.stylesheets)
+        .pipe(sass())
+        .pipe(gulp.dest('css/dist/'))
+});
+
+
 // Watch Files For Changes
 gulp.task('watch', function() {
-    gulp.watch(['js/*.js'], ['scripts']);
+    gulp.watch(['js/src/*.js'], ['scripts']);
 });
 
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'watch']);
+gulp.task('default', ['lint', 'scripts', 'sassminify', 'watch']);

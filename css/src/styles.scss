@@ -1,0 +1,9 @@
+$table_background_color: red;
+$table_border_color: black;
+
+.container {
+    table {
+        background-color: $table_background_color;
+        border: 1px solid $table_border_color;
+    }
+}
